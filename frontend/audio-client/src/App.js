@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+// Removed unused Paper import
 import TextField from '@mui/material/TextField';
 import './App.css';
 
@@ -64,7 +64,8 @@ function App() {
     reader.readAsArrayBuffer(audioBlob);
   };
 
-  const setupWebSocket = () => {
+  // Use useCallback to memoize the setupWebSocket function
+  const setupWebSocket = useCallback(() => {
     socketRef.current = new WebSocket(websocketUrl);
 
     socketRef.current.onopen = () => {
@@ -82,7 +83,7 @@ function App() {
     socketRef.current.onerror = (error) => {
       console.log('WebSocket error:', error);
     };
-  };
+  }, [websocketUrl]); // Include websocketUrl in the dependency array
 
   useEffect(() => {
     setupWebSocket();
@@ -91,7 +92,7 @@ function App() {
         socketRef.current.close();
       }
     };
-  }, [websocketUrl]);
+  }, [setupWebSocket]); // Now we can safely include setupWebSocket here
 
   return (
     <Container>
