@@ -15,7 +15,7 @@ app = Flask(__name__,
 )
 CORS(app)  # 모든 도메인에서의 접근을 허용
 sock = Sock(app)
-model = whisper.load_model("base")
+model = whisper.load_model("turbo")
 
 @app.route('/')
 def index():
