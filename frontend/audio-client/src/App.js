@@ -103,7 +103,7 @@ function App() {
       </AppBar>
       <Box mt={2}>
         <TextField
-          label="WebSocket URL"
+          label="WebSocket URL(웹소켓 접속 링크)"
           variant="outlined"
           fullWidth
           value={websocketUrl}
